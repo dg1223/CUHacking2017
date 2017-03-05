@@ -1,19 +1,23 @@
 #import indicoio
+import time
+import os
 import json
 import urllib2
+from threading import Timer
+from datetime import datetime
 from natsort import natsorted
 from pandas import DataFrame
 ##indicoio.config.api_key = '8a1ce26c054d3985644f63074b015980'
 
-from flask import Flask
-app = Flask(__name__)
-
-@app.route("/data/")
-def callBackend():
-    for i in range(1):
-        info = fetch_and_extract(rows, allInfo)
-    callableObject = info[0]
-    return callableObject
+#from flask import Flask
+#app = Flask(__name__)
+#
+#@app.route("/data/")
+#def callBackend():
+#    for i in range(1):
+#        info = fetch_and_extract(rows, allInfo)
+#    callableObject = info[0]
+#    return callableObject
 
 destination = "C:/Users/Shamir Alavi/Desktop/CUHacking2017/Codes/"
 name = 'rawData'
@@ -74,12 +78,21 @@ def fetch_and_extract(headers, storage):
         storage.append(information)
         information = ["NA"] * len(rows)
         
-    return information
+    ##return information
 
-if __name__ == "__main__":
-    app.run()
+#if __name__ == "__main__":
+#    app.run()
+
+for i in range(250):
+    fetch_and_extract(rows, allInfo)
+    time.sleep(60)
+
+    
+    
+#fetch_and_extract(rows, allInfo)
 
 
+    
     
 pandasData = DataFrame(allInfo)
 pandasData.to_csv(destination + name + fileformat, header = False, index = False)
